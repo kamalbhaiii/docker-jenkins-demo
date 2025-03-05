@@ -7,6 +7,11 @@ pipeline {
                 git branch: 'master', url: "https://github.com/kamalbhaiii/docker-jenkins-demo.git"
             }
         }
+        stage("Down compose") {
+            steps{
+                bat 'docker-compose -f compose.yaml down'
+            }
+        }
         stage("Create mongo and mongo express image") {
             steps{
                 bat 'docker rmi mongo || TRUE'
@@ -21,11 +26,6 @@ pipeline {
                 bat 'docker rmi backend:latest || TRUE'
                 bat 'docker build -t frontend:latest ./frontend'
                 bat 'docker build -t backend:latest ./backend'
-            }
-        }
-        stage("Down compose") {
-            steps{
-                bat 'docker-compose -f compose.yaml down'
             }
         }
         stage("Up compose") {
