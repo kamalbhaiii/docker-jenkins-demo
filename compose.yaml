@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=kamal
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=kamal
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    ports:
+      - 8081:8081
+  backend:
+    container_name: backend
+    image: backend:latest
+    environment:
+      - VITE_BACKEND_PORT=8001
+      - VITE_BACKEND_DB_URL=mongodb://admin:kamal@mongodb:27017
+    ports:
+      - 8001:8001
+    depends_on:
+      - mongodb
+  frontend:
+    container_name: frontend
+    image: frontend:latest
+    build: 
+      context: frontend
+      dockerfile: ./frontend
+      args:
+        - VITE_BACKEND_URL=http://localhost:8001
+    environment:
+      - VITE_BACKEND_URL=http://backend:8001
+    ports:  
+      - 5173:80
+    depends_on:
+      - backend
+volumes:
+  mongo-data:
+    driver: local
