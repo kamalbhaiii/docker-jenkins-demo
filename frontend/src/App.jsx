@@ -11,12 +11,7 @@ export default function Signup() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  useEffect(()=>{
-    console.log(import.meta.env)
-    console.log(import.meta.env.VITE_BACKEND_URL)
-  },[])
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
