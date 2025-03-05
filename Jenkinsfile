@@ -8,21 +8,17 @@ pipeline {
     stages{
         stage("Clone repository") {
             steps{
-                git "https://github.com/kamalbhaiii/docker-jenkins-demo.git"
+                git branch: 'master', url: "https://github.com/kamalbhaiii/docker-jenkins-demo.git"
             }
         }
         stage("Down compose"){
             steps{
-                script{
-                    sh 'docker-compose -f compose.yaml down'
-                }
+                sh 'docker-compose -f compose.yaml down'
             }
         }
         stage("Up compose"){
             steps{
-                script{
-                    sh 'docker-compose -f compose.yaml up -d'
-                }
+                sh 'docker-compose -f compose.yaml up -d'
             }
         }
     }
