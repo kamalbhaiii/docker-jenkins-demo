@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSE_PROJECT_NAME="docker-jenkins-demo"
-    }
-
     stages{
         stage("Clone repository") {
             steps{
@@ -13,16 +9,16 @@ pipeline {
         }
         stage("Create mongo and mongo express image"){
             steps{
-                sh 'docker rmi mongo | TRUE'
-                sh 'docker rmi mongo-express | TRUE'
+                sh 'docker rmi mongo || TRUE'
+                sh 'docker rmi mongo-express || TRUE'
                 sh 'docker pull mongo:latest'
                 sh 'docker pull mongo-express:latest'
             }
         }
         stage("Create frontend and backend image") {
             steps{
-                sh 'docker rmi frontend:latest | TRUE'
-                sh 'docker rmi backend:latest | TRUE'
+                sh 'docker rmi frontend:latest || TRUE'
+                sh 'docker rmi backend:latest || TRUE'
                 sh 'docker build -t frontend:latest ./frontend'
                 sh 'docker build -t backend:latest ./backend'
             }
