@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json .
 
 ARG VITE_BACKEND_URL
-ENV VITE_BACKEND_URL=http://localhost:8001
+ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
 
 RUN npm install
 
