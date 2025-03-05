@@ -33,7 +33,7 @@ services:
     container_name: frontend
     image: frontend:latest
     build: 
-      context: .
+      context: frontend
       dockerfile: frontend/Dockerfile
       args:
         - VITE_BACKEND_URL=http://localhost:8001
